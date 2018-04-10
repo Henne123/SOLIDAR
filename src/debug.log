@@ -1,0 +1,71 @@
+Shutdown : In progress...
+Flush(false) db not started
+StopNode()
+Flushed 0 addresses to peers.dat  3ms
+Flush(true) db not started
+Shutdown : done
+2017-09-10 16:19:09 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+2017-09-10 16:19:09 Solidar version v0.8.6.1~48-beta (2017-08-14 19:32:48 +0200)
+2017-09-10 16:19:09 Using OpenSSL version OpenSSL 1.0.2g  1 Mar 2016
+2017-09-10 16:19:09 Default data directory /home/solidar/.solidar
+2017-09-10 16:19:09 Using data directory 
+2017-09-10 16:19:09 Using at most 125 connections (1024 file descriptors available)
+2017-09-10 16:19:09 Using 6 threads for script verification
+2017-09-10 16:19:09 init message: Verifying wallet...
+2017-09-10 16:19:09 dbenv.open LogDir=database ErrorFile=db.log
+2017-09-10 16:19:09 Bound to [::]:55889
+2017-09-10 16:19:09 Bound to 0.0.0.0:55889
+2017-09-10 16:19:09 init message: Loading block index...
+2017-09-10 16:19:09 Opening LevelDB in blocks/index
+2017-09-10 16:19:09 Opened LevelDB successfully
+2017-09-10 16:19:09 Opening LevelDB in chainstate
+2017-09-10 16:19:09 Opened LevelDB successfully
+2017-09-10 16:19:09 LoadBlockIndexDB(): last block file = 0
+2017-09-10 16:19:09 LoadBlockIndexDB(): transaction index disabled
+2017-09-10 16:19:09 Initializing databases...
+2017-09-10 16:19:09 000000004f7ca0e7345a6c29b19a2d555fe922540adfdd74aeaa2cee98d52d85
+2017-09-10 16:19:09 000000004f7ca0e7345a6c29b19a2d555fe922540adfdd74aeaa2cee98d52d85
+2017-09-10 16:19:09 e399be31d62cef5791bd0f944e3a291fb4b22cf5c6528835ce60922977722785
+2017-09-10 16:19:09 CBlock(hash=000000004f7ca0e7345a6c29b19a2d555fe922540adfdd74aeaa2cee98d52d85, ver=1, hashPrevBlock=0000000000000000000000000000000000000000000000000000000000000000, hashMerkleRoot=e399be31d62cef5791bd0f944e3a291fb4b22cf5c6528835ce60922977722785, nTime=1426224182, nBits=1d00ffff, nNonce=2558320123, vtx=1)
+2017-09-10 16:19:09   CTransaction(hash=e399be31d62cef5791bd0f944e3a291fb4b22cf5c6528835ce60922977722785, ver=2, vin.size=1, vout.size=8, nLockTime=0, nRefHeight=0)
+    CTxIn(COutPoint(0000000000000000000000000000000000000000000000000000000000000000, 4294967295), coinbase 04ffff001d01044c4d4e592054696d65732031332f4d61722f323031352050726f647563657220507269636520496e6465782046616c6c732c20506f696e74696e6720746f204c6f77657220496e666c6174696f6e20)
+    CTxOut(nValue=254.53671561, scriptPubKey=04678afdb0fe5548271967f1a67130)
+    CTxOut(nValue=0.00000001, scriptPubKey=5029d180e0c5ed798d877b1ada9977)
+    CTxOut(nValue=0.00000001, scriptPubKey=2105376 OP_DROP 4d6574616c7320)
+    CTxOut(nValue=0.00000001, scriptPubKey=2020202020202020 OP_DROP 224c6)
+    CTxOut(nValue=0.00000001, scriptPubKey=202020202020 OP_DROP 496368207)
+    CTxOut(nValue=0.00000001, scriptPubKey=20202020202020202020202020 OP_)
+    CTxOut(nValue=0.00000001, scriptPubKey=202020202020202020202020 OP_DR)
+    CTxOut(nValue=496.03174604, scriptPubKey=OP_DUP OP_HASH160 85e54144c402)
+  vMerkleTree: e399be31d62cef5791bd0f944e3a291fb4b22cf5c6528835ce60922977722785 
+2017-09-10 16:19:09 ERROR: LoadBlockIndex() : failed to initialize block database: boost::filesystem::space: Operation not permitted
+2017-09-10 16:19:09 : Error initializing block database.
+Do you want to rebuild the block database now?
+2017-09-10 16:19:09 Shutdown : In progress...
+2017-09-10 16:19:09 Flush(false)
+2017-09-10 16:19:09 DBFlush(false) ended               0ms
+2017-09-10 16:19:09 StopNode()
+2017-09-10 16:19:09 Flushed 0 addresses to peers.dat  2ms
+2017-09-10 16:19:09 Committing 0 changed transactions to coin database...
+2017-09-10 16:19:09 Flush(true)
+2017-09-10 16:19:09 DBFlush(true) ended               0ms
+2017-09-10 16:19:09 Shutdown : done

@@ -8,11 +8,12 @@ Copyright (c) 2009-2013 Bitcoin Developers
 What is Solidar?
 -----------------
 
-Solidar is an experimental new digital currency that enables instant payments to
+Solidar is an experimental digital currency that enables instant payments to
 anyone, anywhere in the world. Solidar uses peer-to-peer technology to operate
-with no central authority: managing transactions and issuing money are carried
-out collectively by the network. Solidar is also the name of the open source
-software which enables the use of this currency.
+these transactions with no central authority: managing transactions and issuing vouchers are carried
+out collectively by the network and as a guaranteed income via the WINC e.V association. 
+Solidar is also the name of the open source
+software which enables the use of this vouchercurrency.
 
 For more information, as well as an immediately useable, binary version of
 the Solidar client software, see https://www.solidar.it.

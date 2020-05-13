@@ -1374,6 +1374,10 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         else if ( dAdjustmentFactor < kLimiterDown )
             dAdjustmentFactor = kLimiterDown;
     } else {
+		//as merged mining is very volatile in difficulty adjustments its important to still create blocks when the hashrate crashes.
+        if (pindexLast->nHeight >= RESTED_BLOCK_HEIGHT && pblock->nTime > pindexLast->nTime + nTargetSpacing*12)
+                return nProofOfWorkLimit;
+                
         // This fixes an issue where a 51% attack can change difficulty at will.
         // Go back the full period unless it's the first retarget after genesis.
         // Code courtesy of Art Forz
@@ -1552,6 +1556,19 @@ const CTxOut &CTransaction::GetOutputFor(const CTxIn& input, CCoinsViewCache& vi
     return coins.vout[input.prevout.n];
 }
 
+    //The old demurrage adjustment calculation took to much processor resources and could not be performed on slow machines.
+
+mpq GetTimeAdjustedValueNew(int64 nInitialValue, int nRelativeDepth)
+{
+    return GetTimeAdjustedValueNew(i64_to_mpq(nInitialValue), nRelativeDepth);
+}
+
+mpq GetTimeAdjustedValueNew(const mpz &zInitialValue, int nRelativeDepth)
+{
+    mpq initial_value(zInitialValue);
+    return GetTimeAdjustedValueNew(initial_value, nRelativeDepth);
+}
+
 mpq GetTimeAdjustedValue(int64 nInitialValue, int nRelativeDepth)
 {
     return GetTimeAdjustedValue(i64_to_mpq(nInitialValue), nRelativeDepth);
@@ -1561,6 +1578,44 @@ mpq GetTimeAdjustedValue(const mpz &zInitialValue, int nRelativeDepth)
 {
     mpq initial_value(zInitialValue);
     return GetTimeAdjustedValue(initial_value, nRelativeDepth);
+}
+
+mpq GetTimeAdjustedValueNew(const mpq& qInitialValue, int nRelativeDepth)
+{
+    if ( 0 == nRelativeDepth )
+        return qInitialValue;
+
+    mpq adjustment = 1;
+
+    while (nRelativeDepth >= 100000){
+            adjustment = adjustment * 0.69249573468584;
+            nRelativeDepth = nRelativeDepth - 100000;}
+    while (nRelativeDepth >= 20000){
+            adjustment = adjustment * 0.92914484250231;
+            nRelativeDepth = nRelativeDepth - 20000;}
+    while (nRelativeDepth >= 5000){
+            adjustment = adjustment * 0.98179508840687;
+            nRelativeDepth = nRelativeDepth - 5000;}
+    while (nRelativeDepth >= 1000){
+            adjustment = adjustment * 0.99633221082889;
+            nRelativeDepth = nRelativeDepth - 1000;}
+    while (nRelativeDepth >= 200){
+            adjustment = adjustment * 0.99926536357709;
+            nRelativeDepth = nRelativeDepth - 200;}
+    while (nRelativeDepth >= 50){
+            adjustment = adjustment * 0.99981629027658;
+            nRelativeDepth = nRelativeDepth - 50;}
+    while (nRelativeDepth >= 10){
+            adjustment = adjustment * 0.99996325535508;
+            nRelativeDepth = nRelativeDepth - 10;}
+    while (nRelativeDepth >= 2){
+            adjustment = adjustment * 0.999992650963;
+            nRelativeDepth = nRelativeDepth - 2;}
+    while (nRelativeDepth >= 1){
+            adjustment = adjustment * 0.99999632547475;
+            nRelativeDepth = nRelativeDepth - 1;}
+
+    return adjustment * qInitialValue;
 }
 
 mpq GetTimeAdjustedValue(const mpq& qInitialValue, int nRelativeDepth)
@@ -1600,12 +1655,18 @@ mpq GetTimeAdjustedValue(const mpq& qInitialValue, int nRelativeDepth)
 
 mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight)
 {
-    return GetTimeAdjustedValue(output.nValue, nBlockHeight-coins.nRefHeight);
+	if (nBlockHeight > RESTED_BLOCK_HEIGHT)
+		return GetTimeAdjustedValueNew(output.nValue, nBlockHeight-coins.nRefHeight);}
+	else
+       return GetTimeAdjustedValue(output.nValue, nBlockHeight-coins.nRefHeight);
 }
 
 mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight)
 {
-    return GetTimeAdjustedValue(output.nValue, nBlockHeight-tx.nRefHeight);
+	if (nBlockHeight > RESTED_BLOCK_HEIGHT)
+	    return GetTimeAdjustedValueNew(output.nValue, nBlockHeight-tx.nRefHeight);
+	else
+        return GetTimeAdjustedValue(output.nValue, nBlockHeight-tx.nRefHeight);
 }
 
 mpq CTransaction::GetValueIn(CCoinsViewCache& inputs) const

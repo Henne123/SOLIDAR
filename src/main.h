@@ -62,6 +62,7 @@ static const mpq TITHE_RATIO_NEW = mpq("999/1000");
 static const mpq TITHE_RATIO = mpq("99/100");
 static const int EQ_HEIGHT = 25000;
 static const int DEMURRAGE_RATE = 262144;
+static const int RESTED_BLOCK_HEIGHT = 111075;
 /** Coinbase transaction outputs can only be spent after this number of new blocks (network rule) */
 static const int COINBASE_MATURITY = 100;
 /** Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp. */
@@ -197,6 +198,9 @@ int GetOurChainID(); // Memi from DVC
 mpq GetTimeAdjustedValue(int64 nInitialValue, int nRelativeDepth);
 mpq GetTimeAdjustedValue(const mpz &zInitialValue, int nRelativeDepth);
 mpq GetTimeAdjustedValue(const mpq &qInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValueNew(int64 nInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValueNew(const mpz &zInitialValue, int nRelativeDepth);
+mpq GetTimeAdjustedValueNew(const mpq &qInitialValue, int nRelativeDepth);
 /** Calculate value of an output at the specified block height */
 mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight);
 mpq GetPresentValue(const CTransaction& tx, const CTxOut& output, int nBlockHeight);

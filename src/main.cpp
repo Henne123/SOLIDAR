@@ -1587,33 +1587,42 @@ mpq GetTimeAdjustedValueNew(const mpq& qInitialValue, int nRelativeDepth)
 
     mpq adjustment = 1;
 
-    while (nRelativeDepth >= 100000){
+    while (nRelativeDepth >= 100000) {
             adjustment = adjustment * 0.69249573468584;
-            nRelativeDepth = nRelativeDepth - 100000;}
-    while (nRelativeDepth >= 20000){
+            nRelativeDepth = nRelativeDepth - 100000;
+    }
+    while (nRelativeDepth >= 20000) {
             adjustment = adjustment * 0.92914484250231;
-            nRelativeDepth = nRelativeDepth - 20000;}
-    while (nRelativeDepth >= 5000){
+            nRelativeDepth = nRelativeDepth - 20000;
+    }
+    while (nRelativeDepth >= 5000) {
             adjustment = adjustment * 0.98179508840687;
-            nRelativeDepth = nRelativeDepth - 5000;}
-    while (nRelativeDepth >= 1000){
+            nRelativeDepth = nRelativeDepth - 5000;
+    }
+    while (nRelativeDepth >= 1000) {
             adjustment = adjustment * 0.99633221082889;
-            nRelativeDepth = nRelativeDepth - 1000;}
-    while (nRelativeDepth >= 200){
+            nRelativeDepth = nRelativeDepth - 1000;
+    }
+    while (nRelativeDepth >= 200) {
             adjustment = adjustment * 0.99926536357709;
-            nRelativeDepth = nRelativeDepth - 200;}
-    while (nRelativeDepth >= 50){
+            nRelativeDepth = nRelativeDepth - 200;
+    }
+    while (nRelativeDepth >= 50) {
             adjustment = adjustment * 0.99981629027658;
-            nRelativeDepth = nRelativeDepth - 50;}
-    while (nRelativeDepth >= 10){
+            nRelativeDepth = nRelativeDepth - 50;
+    }
+    while (nRelativeDepth >= 10) {
             adjustment = adjustment * 0.99996325535508;
-            nRelativeDepth = nRelativeDepth - 10;}
-    while (nRelativeDepth >= 2){
+            nRelativeDepth = nRelativeDepth - 10;
+    }
+    while (nRelativeDepth >= 2) {
             adjustment = adjustment * 0.999992650963;
-            nRelativeDepth = nRelativeDepth - 2;}
-    while (nRelativeDepth >= 1){
+            nRelativeDepth = nRelativeDepth - 2;
+    }
+    while (nRelativeDepth >= 1) {
             adjustment = adjustment * 0.99999632547475;
-            nRelativeDepth = nRelativeDepth - 1;}
+            nRelativeDepth = nRelativeDepth - 1;
+    }
 
     return adjustment * qInitialValue;
 }
@@ -1656,7 +1665,7 @@ mpq GetTimeAdjustedValue(const mpq& qInitialValue, int nRelativeDepth)
 mpq GetPresentValue(const CCoins& coins, const CTxOut& output, int nBlockHeight)
 {
 	if (nBlockHeight > RESTED_BLOCK_HEIGHT)
-		return GetTimeAdjustedValueNew(output.nValue, nBlockHeight-coins.nRefHeight);}
+		return GetTimeAdjustedValueNew(output.nValue, nBlockHeight-coins.nRefHeight);
 	else
        return GetTimeAdjustedValue(output.nValue, nBlockHeight-coins.nRefHeight);
 }

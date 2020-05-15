@@ -68,15 +68,15 @@ Value getinfo(const Array& params, bool fHelp)
 
     proxyType proxy;
     GetProxy(NET_IPV4, proxy);
-    string strBalance = ValueFromAmount(pwalletMain->GetBalance(nBestHeight));
+    string strBalance = FormatMoney(pwalletMain->GetBalance(nBestHeight));
     int dot = strBalance.find(".");
-    string strCutBal = strBalance(0, dot) + strBalance.substr(dot,9);
+    string strCutBal = strBalance.substr(0, dot) + strBalance.substr(dot,9);
 
     Object obj;
     obj.push_back(Pair("version",       (int)CLIENT_VERSION));
     obj.push_back(Pair("protocolversion",(int)PROTOCOL_VERSION));
     obj.push_back(Pair("walletversion", pwalletMain->GetVersion()));
-    obj.push_back(Pair("balance",       strCutBal;
+    obj.push_back(Pair("balance",       strCutBal));
     obj.push_back(Pair("blocks",        (int)nBestHeight));
     obj.push_back(Pair("timeoffset",    (boost::int64_t)GetTimeOffset()));
     obj.push_back(Pair("connections",   (int)vNodes.size()));

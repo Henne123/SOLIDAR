@@ -57,6 +57,13 @@ Licenses of statically linked libraries:
 
 Dependency Build Instructions: Ubuntu & Debian
 ----------------------------------------------
+Suitable terminal command for most newer unix version:
+
+	sudo apt-get install libssl-dev build-essential libdb-dev libdb++-dev libboost-dev libboost-system-dev 
+	libboost-filesystem-dev libboost-program-options-dev libboost-thread-dev libgmp-dev libmpfr-dev
+
+In detail:
+
 Build requirements:
 
 	sudo apt-get install build-essential

@@ -70,7 +70,7 @@ Value getinfo(const Array& params, bool fHelp)
     GetProxy(NET_IPV4, proxy);
     string strBalance = ValueFromAmount(pwalletMain->GetBalance(nBestHeight));
     int dot = strBalance.find(".");
-    strCutBal = strBalance(0, dot) + strBalance.substr(dot,9);
+    string strCutBal = strBalance(0, dot) + strBalance.substr(dot,9);
 
     Object obj;
     obj.push_back(Pair("version",       (int)CLIENT_VERSION));

@@ -69,7 +69,7 @@ Value getinfo(const Array& params, bool fHelp)
     proxyType proxy;
     GetProxy(NET_IPV4, proxy);
     string strBalance = FormatMoney(pwalletMain->GetBalance(nBestHeight));
-    int dot = strBalance.(".");
+    int dot = strBalance.find(".");
     string strCutBal = strBalance.substr(0, dot) + strBalance.substr(dot,9);
 
     Object obj;

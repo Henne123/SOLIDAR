@@ -335,9 +335,21 @@ Value getblocktemplate(const Array& params, bool fHelp)
     result.push_back(Pair("coinbaseaux", aux));
     result.push_back(Pair("coinbasevalue", (int64_t)pblock->vtx[0].vout[0].nValue));
 
-// Budget from FRC could be removed in future version.
-
+// Budget from Solidar.
+    
+    //set payment and taxaddress.
     Array aBudget;
+    Object entry, script;
+    ScriptPubKeyToJSON(pblock->vtx[0].vout[1].scriptPubKey, script);
+    
+    entry.push_back(Pair("value", (int64_t)pblock->vtx[0].vout[1].nValue));
+    entry.push_back(Pair("scriptPubKey", script));
+    aBudget.push_back(entry);
+    result.push_back(Pair("budget", aBudget));
+    
+    
+    /*Array aBudget;
+    
     BOOST_FOREACH(const CTxOut& txout, pblock->vtx[0].vout) {
         if ( txout != pblock->vtx[0].vout[0] ) {
             Object entry, script;
@@ -347,7 +359,7 @@ Value getblocktemplate(const Array& params, bool fHelp)
             aBudget.push_back(entry);
         }
     }
-    result.push_back(Pair("budget", aBudget));
+    result.push_back(Pair("budget", aBudget)); */
 
 // Budget end
 

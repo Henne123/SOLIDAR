@@ -1327,6 +1327,13 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         nInterval       = nOriginalInterval;
         nTargetTimespan = nOriginalTargetTimespan;
     }
+    
+    //as merged mining is very volatile in difficulty adjustments its important to still create blocks when the hashrate crashes.
+    if (pindexLast->nHeight >= RESTED_BLOCK_HEIGHT && pblock->nTime > pindexLast->nTime + nTargetSpacing*12)
+    {
+		printf("No new Block since 2h, difficulty reset to min diff. \n");
+        return nProofOfWorkLimit;
+    }
 
     // Only change once per interval
     if ((pindexLast->nHeight+1) % nInterval != 0)
@@ -1374,9 +1381,6 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         else if ( dAdjustmentFactor < kLimiterDown )
             dAdjustmentFactor = kLimiterDown;
     } else {
-		//as merged mining is very volatile in difficulty adjustments its important to still create blocks when the hashrate crashes.
-        if (pindexLast->nHeight >= RESTED_BLOCK_HEIGHT && pblock->nTime > pindexLast->nTime + nTargetSpacing*12)
-                return nProofOfWorkLimit;
                 
         // This fixes an issue where a 51% attack can change difficulty at will.
         // Go back the full period unless it's the first retarget after genesis.
@@ -2079,8 +2083,10 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     const mpz zTaxValue = qTaxValue.get_num() / qTaxValue.get_den();
     int64 nTaxValue = mpz_to_i64(zTaxValue);
 
+    printf("TaxPaid = %"PRI64d"\n", vtx[0].vout[1].nValue);
+    printf("TaxValue: %s\n",  FormatMoney(qTaxValue).c_str());
     if ((pindex->nHeight > 0) && (vtx[0].vout[1].nValue != nTaxValue))
-        return state.DoS(100, error("Wrong amount or no tax payed\n"));
+        return state.DoS(100, error("Wrong amount or no tax payed.\n"));
 
     if ((pindex->nHeight > 0) && (vtx[0].vout[1].scriptPubKey != CScript() << OP_DUP << OP_HASH160 << ParseHex(GetBlockTaxAddress(pindex->nHeight)) << OP_EQUALVERIFY << OP_CHECKSIG))
         return state.DoS(100, error("Wrong or no address used for tax payment\n"));

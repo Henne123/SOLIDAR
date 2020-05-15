@@ -1592,39 +1592,39 @@ mpq GetTimeAdjustedValueNew(const mpq& qInitialValue, int nRelativeDepth)
     mpq adjustment = 1;
 
     while (nRelativeDepth >= 100000) {
-            adjustment = adjustment * 0.69249573468584;
+            adjustment = adjustment * 0.68285656133067338620;
             nRelativeDepth = nRelativeDepth - 100000;
     }
     while (nRelativeDepth >= 20000) {
-            adjustment = adjustment * 0.92914484250231;
+            adjustment = adjustment * 0.92654367848603153557;
             nRelativeDepth = nRelativeDepth - 20000;
     }
     while (nRelativeDepth >= 5000) {
-            adjustment = adjustment * 0.98179508840687;
+            adjustment = adjustment * 0.98110722593091571040;
             nRelativeDepth = nRelativeDepth - 5000;
     }
     while (nRelativeDepth >= 1000) {
-            adjustment = adjustment * 0.99633221082889;
+            adjustment = adjustment * 0.99619256220067385959;
             nRelativeDepth = nRelativeDepth - 1000;
     }
     while (nRelativeDepth >= 200) {
-            adjustment = adjustment * 0.99926536357709;
+            adjustment = adjustment * 0.99923735005709339399;
             nRelativeDepth = nRelativeDepth - 200;
     }
     while (nRelativeDepth >= 50) {
-            adjustment = adjustment * 0.99981629027658;
+            adjustment = adjustment * 0.99980928296172693495;
             nRelativeDepth = nRelativeDepth - 50;
     }
     while (nRelativeDepth >= 10) {
-            adjustment = adjustment * 0.99996325535508;
+            adjustment = adjustment * 0.99996185368217327398;
             nRelativeDepth = nRelativeDepth - 10;
     }
     while (nRelativeDepth >= 2) {
-            adjustment = adjustment * 0.999992650963;
+            adjustment = adjustment * 0.99999237062002066522;
             nRelativeDepth = nRelativeDepth - 2;
     }
     while (nRelativeDepth >= 1) {
-            adjustment = adjustment * 0.99999632547475;
+            adjustment = adjustment * 0.999996185302734375;
             nRelativeDepth = nRelativeDepth - 1;
     }
 
@@ -2081,8 +2081,8 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     mpq qCheckTaxPayment  = ((GetInitialDistributionAmount(pindex->nHeight) + GetPerpetualSubsidyAmount(pindex->nHeight)) * getTitheRatio(pindex->nHeight));
     const mpq qTaxValue = RoundAbsolute(qCheckTaxPayment, ROUND_AWAY_FROM_ZERO);
     const mpz zTaxValue = qTaxValue.get_num() / qTaxValue.get_den();
-    int64 nTaxValue = mpz_to_i64(zTaxValue);
-
+    int64 nTaxValue = mpz_to_i64(zTaxValue);    
+    
     printf("TaxPaid = %"PRI64d"\n", vtx[0].vout[1].nValue);
     printf("TaxValue: %s\n",  FormatMoney(qTaxValue).c_str());
     if ((pindex->nHeight > 0) && (vtx[0].vout[1].nValue != nTaxValue))

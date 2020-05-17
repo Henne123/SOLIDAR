@@ -67,9 +67,6 @@ static const int RESTED_BLOCK_HEIGHT = 111075;
 static const int COINBASE_MATURITY = 100;
 /** Threshold for nLockTime: below this value it is interpreted as block number, otherwise as UNIX timestamp. */
 static const unsigned int LOCKTIME_THRESHOLD = 500000000; // Tue Nov  5 00:53:20 1985 UTC
-/** FIR difficulty filter parameters */
-static const int DIFF_FILTER_THRESHOLD_TESTNET =  INT_MAX;
-static const int DIFF_FILTER_THRESHOLD         = INT_MAX; //FRC filter for future purpose if needed..
 /** Maximum number of script-checking threads allowed */
 static const int MAX_SCRIPTCHECK_THREADS = 16;
 #ifdef USE_UPNP

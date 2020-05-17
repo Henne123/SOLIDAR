@@ -1414,10 +1414,8 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
     //Assert that no min difficulty Block is used for new difficulty adjustment    
     const CBlockIndex* pindexDiffLast = pindexLast;
 
-    while (pindexDiffLast->nBits == nProofOfWorkLimit)
+    while (pindexDiffLast->nBits == nProofOfWorkLimit && pindexDiffLast->nHeight >= RESTED_BLOCK_HEIGHT)
     {
-		if (pindexDiffLast->pprev == NULL) //Stop at Genesisblock
-		    break;
 		pindexDiffLast = pindexDiffLast->pprev;
     }
 	

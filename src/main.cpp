@@ -1416,6 +1416,8 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 
     while (pindexDiffLast->nBits == nProofOfWorkLimit)
     {
+		if (pindexDiffLast->pprev == NULL) //Stop at Genesisblock
+		    break;
 		pindexDiffLast = pindexDiffLast->pprev;
     }
 	

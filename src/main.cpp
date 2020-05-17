@@ -1273,6 +1273,7 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 {
     static unsigned int nProofOfWorkLimit = bnProofOfWorkLimit.GetCompact();
 
+
     #define WINDOW 144
     static mpq kOne = mpq(1);
     static mpq kTwoToTheThirtyOne = mpq("2147483648");
@@ -1409,7 +1410,16 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 
     // Retarget
     CBigNum bnNew;
-    bnNew.SetCompact(pindexLast->nBits);
+
+    //Assert that no min difficulty Block is used for new difficulty adjustment    
+    const CBlockIndex* pindexDiffLast = pindexLast;
+
+    while (pindexDiffLast->nBits == nProofOfWorkLimit)
+    {
+		pindexDiffLast = pindexDiffLast->pprev;
+    }
+	
+    bnNew.SetCompact(pindexDiffLast->nBits);
     bnNew *= mpz_to_i64(dAdjustmentFactor.get_den());
     bnNew /= mpz_to_i64(dAdjustmentFactor.get_num());
 

@@ -430,10 +430,10 @@ Value getworkaux(const Array& params, bool fHelp)
             "  \"auxpow\" : aux proof of work to submit to aux chain\n"
             );
     if (vNodes.empty())
-        throw JSONRPCError(-9, "Devcoin is not connected!");
+        throw JSONRPCError(-9, "Solidar is not connected!");
 
     if (IsInitialBlockDownload())
-        throw JSONRPCError(-10, "Devcoin is downloading blocks...");
+        throw JSONRPCError(-10, "Solidar is downloading blocks...");
     static map<uint256, pair<CBlock*, unsigned int> > mapNewBlock;
     static vector<CBlockTemplate*> vNewBlockTemplate;
     static CReserveKey reservekey(pwalletMain);

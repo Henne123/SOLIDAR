@@ -1197,43 +1197,43 @@ string GetBlockTaxAddress(int nHeight)
         nBlockTaxAddress   = "EC3E2D885971F21E4AC095E3F85A78302EA3CB2C";  //1NY8xU183hmonjXvLcxc42qKKctjWZHoaf
         }
     if (nHeight >= 114400) {
-        nBlockTaxAddress   = "BE013FBC9B40C4CCD615917C00F00FE39C2FB384";  //1JKetEDVcVVXZ6uopTngPjypAQRaEC3mrt
+        nBlockTaxAddress   = "F793007B204D49C428410C329768465B46CE9357";  //1Pa41FbkoLerBtw93Xpbnb7EbH1semYcnB
         }
     if (nHeight >= 118800) {
-        nBlockTaxAddress   = "658FB7459CD332B6892DEA9FFC4EA17A573F56D4";  //1AG1Qw19DsuScPwM5fCBeA7rr9fqaYYZbW
+        nBlockTaxAddress   = "C7144AA042E161F73D638ADF8379E5CC97A45C42";  //1K9dn455yq1dYazPz8AaC991DC3h9t51fJ
         }
     if (nHeight >= 123200) {
-        nBlockTaxAddress   = "BAD19BCC41E0DF2E48BB4BAC2AE79BCD522DB971";  //1J2onYLZeEzDa2vp6ih86fvB8sgg82bpu2
+        nBlockTaxAddress   = "435F4E02A7DE0DFC887B92589318940CD91544B3";  //179ESjzVzzCposP2CZuMAHAMQhZo6vXLSV
         }
     if (nHeight >= 127600) {
-        nBlockTaxAddress   = "96E9025F7A3A7365485CD15A9C0C40771B68D36A";  //1EkwVYTiXbsHMtHXLpvkK1mvUmPUkpb5uo
+        nBlockTaxAddress   = "815F1DA58A787F8B6842CEF4A1CFD770D846BAA0";  //1Co47WUpC7YpDV5WTLpzC6AqLDeYMde3ju
         }
     if (nHeight >= 132000) {
-        nBlockTaxAddress   = "A489C2019F7A3B4233021F430BCA9F211D690EC4";  //1Fzzr3U3m3EuBbmpYZRRF7q5BsnPSw55eS
+        nBlockTaxAddress   = "F6DE5E0884BC7F5AA4DAAF81DFF1621EAC61398F";  //1PWKcYTWsVoPByY5dUcLZbFNjvJDaGqT2U
         }
     if (nHeight >= 136400) {
-        nBlockTaxAddress   = "E528B671305023E868E1870CF49ACBDABA8F55FE";  //1Fzzr3U3m3EuBbmpYZRRF7q5BsnPSw55eS
+        nBlockTaxAddress   = "211E7216EE54497D3638AE4F89938EF1C5D9D220";  //1427mjTpze8EMmUCiZmiGvTJF8V35q3Q2q
         }
     if (nHeight >= 140800) {
-        nBlockTaxAddress   = "E528B671305023E868E1870CF49ACBDABA8F55FE";  //1MtgWhHxTvBj1aa3cf6oz6fidefXscxsSQ
+        nBlockTaxAddress   = "6AF153416CC224EA63A41210D17D9E99C76763D6";  //1AkTiuSG5UjWzAgjP3B51EpxpSntXcJXmv
         }
     if (nHeight >= 145200) {
-        nBlockTaxAddress   = "D9BB7DB22D70BD16CB4B0ED022A94914923AE4A2";  //1LrGEjMc6a83xoBivcrEXFRnj1uMwnhWiM
+        nBlockTaxAddress   = "B2DB9BFC014A5206F358106F486C0D62E25FCCCE";  //1HJiMsNVX1i22EccUFg9TJSaPz5MzS2AKQ
         }
     if (nHeight >= 149600) {
-        nBlockTaxAddress   = "0FAF56E2E1D22C9D9A29C153D8559F1663495D06";  //12RwBg1KVXH6q2QVx1VHS6DmNqJkyeMov8
+        nBlockTaxAddress   = "F3AF9AEB6E3D3986DC5AE827E775827DC5FCC6E8";  //1PDVZsk1tYNxJH2jLfdTSuRzWdmELUURCx
         }
     if (nHeight >= 154000) {
-        nBlockTaxAddress   = "58CC8BF9E3BCD0A0AAA7664A561647E3D381E7FB";  //196XW3MgLmML5GjD9p1MXsAKenvfGbVHpt
+        nBlockTaxAddress   = "51DDF0C1AB3E2073EA4AD9CCD5D43AA14B2DC6A3";  //18TscERXxLPWUtgNpwX4uqajNk9tZGSPdg
         }
     if (nHeight >= 158400) {
-        nBlockTaxAddress   = "48663C0F0F83AE073A00206EA6299A54D70ACFFB";  //17bp8CQaHectDADASqCgDsibqAjGVnFYV7
+        nBlockTaxAddress   = "B42621F0A9ECB14D0B70568F2051822EDE53792E";  //1HRYK2bSE2oUmf3oqibNaHADxfpKC1NeRK
         }
     if (nHeight >= 162800) {
-        nBlockTaxAddress   = "52D5E3480BEA4ADD0C4B6A820F23055A110BA0AB";  //18Yzdv9CPgSvi87oLQgTcK5brY4SVGp14M
+        nBlockTaxAddress   = "CA1195F3201CBA36281F465BE0E561698C50E1D4";  //1KRSZdT7to4hHnc32BMuEFPgTv3DiobfX6
         }
     if (nHeight >= 167200) {
-        nBlockTaxAddress   = "A1BB278ECBC84A2741D01A0620E5BDB1F7C59548";  //1Fk9zcKLzLBgpDk2mx3M2EujL5ytUvbcQp
+        nBlockTaxAddress   = "88ABA5562F27D7AC8DF962367F8BB9C43FBBAC3C";  //1DTeXFamq3ZNzvTGyeg4fNuC7KnusVZRZS
         }
     return nBlockTaxAddress;
 }
@@ -2016,10 +2016,8 @@ bool CBlock::ConnectBlock(CValidationState &state, CBlockIndex* pindex, CCoinsVi
     const mpz zTaxValue = qTaxValue.get_num() / qTaxValue.get_den();
     int64 nTaxValue = mpz_to_i64(zTaxValue);    
     
-    printf("TaxPaid = %"PRI64d"\n", vtx[0].vout[1].nValue);
-    printf("TaxValue: %s\n",  FormatMoney(qTaxValue).c_str());
     if ((pindex->nHeight > 0) && (vtx[0].vout[1].nValue != nTaxValue))
-        return state.DoS(100, error("Wrong amount or no tax payed.\n"));
+        return state.DoS(100, error("Wrong amount or no tax payed. TaxPaid = %s ; TaxValue: %s\n", FormatMoney(vtx[0].vout[1].nValue).c_str(), FormatMoney(qTaxValue).c_str()));
 
     if ((pindex->nHeight > 0) && (vtx[0].vout[1].scriptPubKey != CScript() << OP_DUP << OP_HASH160 << ParseHex(GetBlockTaxAddress(pindex->nHeight)) << OP_EQUALVERIFY << OP_CHECKSIG))
         return state.DoS(100, error("Wrong or no address used for tax payment\n"));

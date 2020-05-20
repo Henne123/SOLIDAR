@@ -1242,31 +1242,6 @@ static const int64 nTargetSpacing = 10 * 60;
 static const int64 nInterval = 128;
 static const int64 nTargetTimespan = nInterval * nTargetSpacing; // changes ~every 1.75 d
 
-//
-// minimum amount of work that could possibly be required nTime after
-// minimum work required was nBase
-//
-unsigned int ComputeMinWork(unsigned int nBase, int64 nTime)
-{
-    // Testnet has min-difficulty blocks
-    // after nTargetSpacing*2 time between blocks:
-    if (fTestNet && nTime > nTargetSpacing*2)
-        return bnProofOfWorkLimit.GetCompact();
-
-    CBigNum bnResult;
-    bnResult.SetCompact(nBase);
-    while (nTime > 0 && bnResult < bnProofOfWorkLimit)
-    {
-        // Maximum 400% adjustment...
-        bnResult *= 4;
-        // ... in best-case exactly 4-times-normal target time
-        nTime -= nTargetTimespan*4;
-    }
-    if (bnResult > bnProofOfWorkLimit)
-        bnResult = bnProofOfWorkLimit;
-    return bnResult.GetCompact();
-}
-
 unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBlockHeader *pblock)
 {
     static unsigned int nProofOfWorkLimit = bnProofOfWorkLimit.GetCompact();
@@ -1276,10 +1251,18 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
         return nProofOfWorkLimit;
     
     //as merged mining is very volatile in difficulty adjustments its important to still create blocks when the hashrate crashes.
-    if (pindexLast->nHeight >= RESTED_BLOCK_HEIGHT && pblock->nTime > pindexLast->nTime + nTargetSpacing*12)
+    if (pindexLast->nHeight >= RESTED_BLOCK_HEIGHT && pblock->nTime > pindexLast->nTime + nTargetSpacing*36)
     {
-        printf("No new Block since 2h, difficulty reset to min diff. \n");
+        printf("No new Block since 6h, difficulty reset to min diff. \n");
         return nProofOfWorkLimit;
+    }
+    int64 nRestedInterval = nInterval;
+    int64 nRestedTargetTimespan = nTargetTimespan;
+    //nInterval has to be reduced to faster adjust to hashing changes.
+    if (pindexLast->nHeight > RESTED_BLOCK_HEIGHT + 10)
+    {
+        nRestedInterval = 20;
+        nRestedTargetTimespan = nRestedInterval * nTargetSpacing;
     }
     
     //Assert that no min difficulty Block is used for new difficulty adjustment    
@@ -1291,8 +1274,13 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
     }
 
     // Only change once per interval
-    if ((pindexLast->nHeight+1) % nInterval != 0)
+    if ((pindexLast->nHeight+1) % nRestedInterval != 0)
     {
+		if (pindexLast->nHeight >= RESTED_BLOCK_HEIGHT && pblock->nTime > pindexLast->nTime + nTargetSpacing*12)
+		{
+			printf("No new Block since 2h, difficulty reset to min diff. \n");
+			return nProofOfWorkLimit;
+		}
         // Special difficulty rule for testnet:
         if (fTestNet)
         {
@@ -1304,7 +1292,7 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
             {
                 // Return the last non-special-min-difficulty-rules-block
                 const CBlockIndex* pindex = pindexLast;
-                while (pindex->pprev && pindex->nHeight % nInterval != 0 && pindex->nBits == nProofOfWorkLimit)
+                while (pindex->pprev && pindex->nHeight % nRestedInterval != 0 && pindex->nBits == nProofOfWorkLimit)
                     pindex = pindex->pprev;
                 return pindex->nBits;
             }
@@ -1318,25 +1306,29 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 	// This fixes an issue where a 51% attack can change difficulty at will.
 	// Go back the full period unless it's the first retarget after genesis.
 	// Code courtesy of Art Forz
-	int blockstogoback = nInterval-1;
-	if ((pindexLast->nHeight+1) != nInterval)
-		blockstogoback = nInterval;
+	int blockstogoback = nRestedInterval-1;
+	if ((pindexLast->nHeight+1) != nRestedInterval)
+		blockstogoback = nRestedInterval;
 
 	// Go back by what we want to be 14 days worth of blocks
 	const CBlockIndex* pindexFirst = pindexLast;
 	for (int i = 0; pindexFirst && i < blockstogoback; i++)
 		pindexFirst = pindexFirst->pprev;
 	assert(pindexFirst);
+	
+	int adjustmentMax = 4;
+	if (pindexLast->nHeight > RESTED_BLOCK_HEIGHT + 10)
+	    adjustmentMax = 3 + pindexLast->nHeight - pindexDiffLast->nHeight;
 
 	// Limit adjustment step
 	int64 nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();
 	printf("  nActualTimespan = %"PRI64d"  before bounds\n", nActualTimespan);
-	if (nActualTimespan < nTargetTimespan/4)
-		nActualTimespan = nTargetTimespan/4;
-	if (nActualTimespan > nTargetTimespan*4)
-		nActualTimespan = nTargetTimespan*4;
+	if (nActualTimespan < nRestedTargetTimespan/4)
+		nActualTimespan = nRestedTargetTimespan/4;
+	if (nActualTimespan > nRestedTargetTimespan*adjustmentMax)
+		nActualTimespan = nRestedTargetTimespan*adjustmentMax;
 
-	dAdjustmentFactor = i64_to_mpq(nTargetTimespan) /
+	dAdjustmentFactor = i64_to_mpq(nRestedTargetTimespan) /
 						i64_to_mpq(nActualTimespan);
 
     // Retarget
@@ -2676,18 +2668,6 @@ bool ProcessBlock(CValidationState &state, CNode* pfrom, CBlock* pblock, CDiskBl
         {
             return state.DoS(100, error("ProcessBlock() : block with timestamp before last checkpoint"));
         }
-#if 0
-        // Now that we are using a FIR filter (see above) this is no longer
-        // a straightforward calculation.
-        CBigNum bnNewBlock;
-        bnNewBlock.SetCompact(pblock->nBits);
-        CBigNum bnRequired;
-        bnRequired.SetCompact(ComputeMinWork(pcheckpoint->nBits, deltaTime));
-        if (bnNewBlock > bnRequired)
-        {
-            return state.DoS(100, error("ProcessBlock() : block with too little proof-of-work"));
-        }
-#endif
     }
 
 

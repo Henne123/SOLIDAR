@@ -1318,7 +1318,7 @@ unsigned int static GetNextWorkRequired(const CBlockIndex* pindexLast, const CBl
 	
 	int adjustmentMax = 4;
 	if (pindexLast->nHeight > RESTED_BLOCK_HEIGHT + 10)
-	    adjustmentMax = 3 + pindexLast->nHeight - pindexDiffLast->nHeight;
+	    adjustmentMax = 4 + pindexLast->nHeight - pindexDiffLast->nHeight;
 
 	// Limit adjustment step
 	int64 nActualTimespan = pindexLast->GetBlockTime() - pindexFirst->GetBlockTime();

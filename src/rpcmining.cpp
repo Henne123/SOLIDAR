@@ -66,6 +66,7 @@ Value gethashespersec(const Array& params, bool fHelp)
 
 Value getmininginfo(const Array& params, bool fHelp)
 {
+    printf("Getwork called");
     if (fHelp || params.size() != 0)
         throw runtime_error(
             "getmininginfo\n"
@@ -116,7 +117,7 @@ Value getwork(const Array& params, bool fHelp)
         static int64 nStart;
         static CBlockTemplate* pblocktemplate;
         if (pindexPrev != pindexBest ||
-            (nTransactionsUpdated != nTransactionsUpdatedLast && GetTime() - nStart > 60))
+            (nTransactionsUpdated != nTransactionsUpdatedLast && GetTime() - nStart > 60) || (pindexBest->nTime < GetTime() - 7200))
         {
             if (pindexPrev != pindexBest)
             {
